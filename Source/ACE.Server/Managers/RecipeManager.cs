@@ -283,6 +283,13 @@ namespace ACE.Server.Managers
 
                     if (player.AugmentationBonusImbueChance > 0)
                         successChance += player.AugmentationBonusImbueChance * 0.05f;
+
+                    if (player.CharacterTitleId == 199)
+                        successChance = 1.0f;
+
+                    if (player.CharacterTitleId == 198)
+                        successChance = 0.75f;
+
                 }
 
                 // handle rare foolproof material
