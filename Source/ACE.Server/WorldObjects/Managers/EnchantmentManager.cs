@@ -218,7 +218,7 @@ namespace ACE.Server.WorldObjects.Managers
             {
                 entry.Duration = spell.Duration;
 
-                if (caster.HouseOwnerName is "Admin")
+                if (caster.WeenieClassId == 4)
                     entry.Duration *= 16.0f;
 
                 if (caster.WeenieClassId == 80000000)
