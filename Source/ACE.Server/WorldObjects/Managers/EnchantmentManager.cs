@@ -221,8 +221,8 @@ namespace ACE.Server.WorldObjects.Managers
                 if (caster.WeenieClassId == 4)
                     entry.Duration *= 16.0f;
 
-                if (caster.WeenieClassId == 80000000)
-                    entry.Duration *= 16.0f;
+                if (caster.WeenieClassId == 5000798)
+                    entry.Duration *= 6.0f;
 
                 if (caster is Player player && player.AugmentationIncreasedSpellDuration > 0 && spell.DotDuration == 0)
                     entry.Duration *= 1.0f + player.AugmentationIncreasedSpellDuration * 0.2f;
