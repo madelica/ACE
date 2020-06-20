@@ -63,7 +63,7 @@ namespace ACE.Server.Command.Handlers.Processors
             return FileType.Undefined;
         }
 
-        [CommandHandler("import-json", AccessLevel.Developer, CommandHandlerFlag.None, 1, "Imports json data from the Content folder", "<wcid>")]
+        [CommandHandler("import-json", AccessLevel.Admin, CommandHandlerFlag.None, 1, "Imports json data from the Content folder", "<wcid>")]
         public static void HandleImportJson(Session session, params string[] parameters)
         {
             var param = parameters[0];
@@ -211,7 +211,7 @@ namespace ACE.Server.Command.Handlers.Processors
                 ImportJsonQuest(session, json_folder, file.Name);
         }
 
-        [CommandHandler("import-sql", AccessLevel.Developer, CommandHandlerFlag.None, 1, "Imports sql data from the Content folder", "<wcid>")]
+        [CommandHandler("import-sql", AccessLevel.Admin, CommandHandlerFlag.None, 1, "Imports sql data from the Content folder", "<wcid>")]
         public static void HandleImportSQL(Session session, params string[] parameters)
         {
             var param = parameters[0];
@@ -1033,7 +1033,7 @@ namespace ACE.Server.Command.Handlers.Processors
 
         public static LandblockInstanceWriter LandblockInstanceWriter;
 
-        [CommandHandler("createinst", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Spawns a new wcid or classname as a landblock instance", "<wcid or classname>")]
+        [CommandHandler("createinst", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Spawns a new wcid or classname as a landblock instance", "<wcid or classname>")]
         public static void HandleCreateInst(Session session, params string[] parameters)
         {
             var loc = new Position(session.Player.Location);
@@ -1326,7 +1326,7 @@ namespace ACE.Server.Command.Handlers.Processors
             return null;
         }
 
-        [CommandHandler("removeinst", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, "Removes the last appraised object from the current landblock instances")]
+        [CommandHandler("removeinst", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, "Removes the last appraised object from the current landblock instances")]
         public static void HandleRemoveInst(Session session, params string[] parameters)
         {
             RemoveInstance(session);
@@ -1452,7 +1452,7 @@ namespace ACE.Server.Command.Handlers.Processors
                 RemoveChild(session, subLink, instances);
         }
 
-        [CommandHandler("addenc", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Spawns a new wcid or classname in the current outdoor cell as an encounter", "<wcid or classname>")]
+        [CommandHandler("addenc", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Spawns a new wcid or classname in the current outdoor cell as an encounter", "<wcid or classname>")]
         public static void HandleAddEncounter(Session session, params string[] parameters)
         {
             var param = parameters[0];

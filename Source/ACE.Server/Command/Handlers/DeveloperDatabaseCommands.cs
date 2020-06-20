@@ -19,7 +19,7 @@ namespace ACE.Server.Command.Handlers
     {
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        [CommandHandler("databasequeueinfo", AccessLevel.Developer, CommandHandlerFlag.None, 0, "Show database queue information.")]
+        [CommandHandler("databasequeueinfo", AccessLevel.Admin, CommandHandlerFlag.None, 0, "Show database queue information.")]
         public static void HandleDatabaseQueueInfo(Session session, params string[] parameters)
         {
             CommandHandlerHelper.WriteOutputInfo(session, $"Current database queue count: {DatabaseManager.Shard.QueueCount}");
@@ -30,7 +30,7 @@ namespace ACE.Server.Command.Handlers
             });
         }
 
-        [CommandHandler("databaseperftest", AccessLevel.Developer, CommandHandlerFlag.None, 0, "Test server/database performance.", "biotasPerTest\n" + "optional parameter biotasPerTest if omitted 1000")]
+        [CommandHandler("databaseperftest", AccessLevel.Admin, CommandHandlerFlag.None, 0, "Test server/database performance.", "biotasPerTest\n" + "optional parameter biotasPerTest if omitted 1000")]
         public static void HandleDatabasePerfTest(Session session, params string[] parameters)
         {
             int biotasPerTest = DatabasePerfTest.DefaultBiotasTestCount;
@@ -144,7 +144,7 @@ namespace ACE.Server.Command.Handlers
             return strings;
         }
 
-        [CommandHandler("database-shard-cache-pbrt", AccessLevel.Developer, CommandHandlerFlag.None, 0, "Shard Database, Player Biota Cache - Retention Time (in minutes)")]
+        [CommandHandler("database-shard-cache-pbrt", AccessLevel.Admin, CommandHandlerFlag.None, 0, "Shard Database, Player Biota Cache - Retention Time (in minutes)")]
         public static void HandleDatabaseShardCachePBRT(Session session, params string[] parameters)
         {
             if (!(DatabaseManager.Shard.BaseDatabase is ShardDatabaseWithCaching shardDatabaseWithCaching))
@@ -173,7 +173,7 @@ namespace ACE.Server.Command.Handlers
             CommandHandlerHelper.WriteOutputInfo(session, $"Shard Database, Player Biota Cache - Retention Time {shardDatabaseWithCaching.PlayerBiotaRetentionTime.TotalMinutes:N0} m");
         }
 
-        [CommandHandler("database-shard-cache-npbrt", AccessLevel.Developer, CommandHandlerFlag.None, 0, "Shard Database, Non-Player Biota Cache - Retention Time (in minutes)")]
+        [CommandHandler("database-shard-cache-npbrt", AccessLevel.Admin, CommandHandlerFlag.None, 0, "Shard Database, Non-Player Biota Cache - Retention Time (in minutes)")]
         public static void HandleDatabaseShardCacheNPBRT(Session session, params string[] parameters)
         {
             if (!(DatabaseManager.Shard.BaseDatabase is ShardDatabaseWithCaching shardDatabaseWithCaching))

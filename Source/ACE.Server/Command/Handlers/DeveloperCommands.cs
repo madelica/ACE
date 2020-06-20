@@ -378,7 +378,7 @@ namespace ACE.Server.Command.Handlers
         /// <summary>
         /// Debug command to spawn the Barber UI
         /// </summary>
-        [CommandHandler("barbershop", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, "Displays the barber ui")]
+        [CommandHandler("barbershop", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, "Displays the barber ui")]
         public static void BarberShop(Session session, params string[] parameters)
         {
             session.Network.EnqueueSend(new GameEventStartBarber(session));
@@ -392,7 +392,7 @@ namespace ACE.Server.Command.Handlers
         /// <summary>
         /// Debug command to print out all of the active players connected too the server.
         /// </summary>
-        [CommandHandler("listplayers", AccessLevel.Developer, CommandHandlerFlag.None, 0, "Displays all of the active players connected too the server.")]
+        [CommandHandler("listplayers", AccessLevel.Sentinel, CommandHandlerFlag.None, 0, "Displays all of the active players connected too the server.")]
         public static void HandleListPlayers(Session session, params string[] parameters)
         {
             string message = "";
@@ -450,7 +450,7 @@ namespace ACE.Server.Command.Handlers
         /// This is a VERY crude test. It should never be used on a live server.
         /// There isn't really much point to this command other than making sure landblocks can load and are semi-efficient.
         /// </summary>
-        [CommandHandler("loadalllandblocks", AccessLevel.Developer, CommandHandlerFlag.None, "Loads all Landblocks. This is VERY crude. Do NOT use it on a live server!!! It will likely crash the server.  Landblock resources will be loaded async and will continue to do work even after all landblocks have been loaded.")]
+        [CommandHandler("loadalllandblocks", AccessLevel.Admin, CommandHandlerFlag.None, "Loads all Landblocks. This is VERY crude. Do NOT use it on a live server!!! It will likely crash the server.  Landblock resources will be loaded async and will continue to do work even after all landblocks have been loaded.")]
         public static void HandleLoadAllLandblocks(Session session, params string[] parameters)
         {
             CommandHandlerHelper.WriteOutputInfo(session, "Loading landblocks. This will likely crash the server. Landblock resources will be loaded async and will continue to do work even after all landblocks have been loaded.");
@@ -670,7 +670,7 @@ namespace ACE.Server.Command.Handlers
         /// <summary>
         /// Debug command to print out all of the saved character positions.
         /// </summary>
-        [CommandHandler("listpositions", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 0, "Displays all available saved character positions from the database.", "@listpositions")]
+        [CommandHandler("listpositions", AccessLevel.Sentinel, CommandHandlerFlag.RequiresWorld, 0, "Displays all available saved character positions from the database.", "@listpositions")]
         public static void HandleListPositions(Session session, params string[] parameters)
         {
             var posDict = session.Player.GetAllPositions();
@@ -733,7 +733,7 @@ namespace ACE.Server.Command.Handlers
         /// <summary>
         /// Add a specific title to yourself
         /// </summary>
-        [CommandHandler("addtitle", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Add title to yourself", "[titleid]")]
+        [CommandHandler("addtitle", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Add title to yourself", "[titleid]")]
         public static void HandleAddTitle(Session session, params string[] parameters)
         {
             if (uint.TryParse(parameters[0], out var titleId))
@@ -743,7 +743,7 @@ namespace ACE.Server.Command.Handlers
         /// <summary>
         /// Add all titles to yourself
         /// </summary>
-        [CommandHandler("addalltitles", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, "Add all titles to yourself")]
+        [CommandHandler("addalltitles", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, "Add all titles to yourself")]
         public static void HandleAddAllTitles(Session session, params string[] parameters)
         {
             foreach (CharacterTitle title in Enum.GetValues(typeof(CharacterTitle)))
@@ -755,7 +755,7 @@ namespace ACE.Server.Command.Handlers
         // Experience
         // ==================================
 
-        [CommandHandler("grantxp", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Give XP to yourself (or the specified character).", "ulong\n" + "@grantxp [name] 191226310247 is max level 275")]
+        [CommandHandler("grantxp", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Give XP to yourself (or the specified character).", "ulong\n" + "@grantxp [name] 191226310247 is max level 275")]
         public static void HandleGrantXp(Session session, params string[] parameters)
         {
             if (parameters?.Length > 0)
@@ -797,7 +797,7 @@ namespace ACE.Server.Command.Handlers
             ChatPacket.SendServerMessage(session, "Usage: /grantxp [name] 1234 (max 999999999999)", ChatMessageType.Broadcast);
         }
 
-        [CommandHandler("grantluminance", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Give luminance to yourself (or the specified character).", "ulong\n" + "@grantluminance [name] 1500000 is max luminance")]
+        [CommandHandler("grantluminance", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Give luminance to yourself (or the specified character).", "ulong\n" + "@grantluminance [name] 1500000 is max luminance")]
         public static void HandleGrantLuminance(Session session, params string[] parameters)
         {
             if (parameters?.Length > 0)
@@ -839,7 +839,7 @@ namespace ACE.Server.Command.Handlers
             ChatPacket.SendServerMessage(session, "Usage: /grantluminance [name] 1234 (max 999999999999)", ChatMessageType.Broadcast);
         }
 
-        [CommandHandler("grantitemxp", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Give item XP to the last appraised item.")]
+        [CommandHandler("grantitemxp", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Give item XP to the last appraised item.")]
         public static void HandleGrantItemXp(Session session, params string[] parameters)
         {
             if (!long.TryParse(parameters[0], out var amount))
@@ -871,7 +871,7 @@ namespace ACE.Server.Command.Handlers
             }
         }
 
-        [CommandHandler("spendallxp", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 0, "Spend all available XP on Attributes, Vitals and Skills.")]
+        [CommandHandler("spendallxp", AccessLevel.Advocate, CommandHandlerFlag.RequiresWorld, 0, "Spend all available XP on Attributes, Vitals and Skills.")]
         public static void HandleSpendAllXp(Session session, params string[] parameters)
         {
             session.Player.SpendAllXp();
@@ -996,7 +996,7 @@ namespace ACE.Server.Command.Handlers
             AddWeeniesToInventory(session, weenieIds);
         }
 
-        [CommandHandler("inv", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 0, "Creates sample items, foci and containers in your inventory.")]
+        [CommandHandler("inv", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 0, "Creates sample items, foci and containers in your inventory.")]
         public static void HandleInv(Session session, params string[] parameters)
         {
             HashSet<uint> weenieIds = new HashSet<uint> { 44, 45, 46, 136, 5893, 15268, 15269, 15270, 15271, 12748 };
@@ -1028,7 +1028,7 @@ namespace ACE.Server.Command.Handlers
             AddWeeniesToInventory(session, weenieIds);
         }
 
-        [CommandHandler("currency", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 0, "Creates some currency items in your inventory for testing.")]
+        [CommandHandler("currency", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 0, "Creates some currency items in your inventory for testing.")]
         public static void HandleCurrency(Session session, params string[] parameters)
         {
             HashSet<uint> weenieIds = new HashSet<uint> { 273, 20630 };
@@ -1036,7 +1036,7 @@ namespace ACE.Server.Command.Handlers
             AddWeeniesToInventory(session, weenieIds);
         }
 
-        [CommandHandler("cirand", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Creates random objects in your inventory.", "type (string or number) <num to create> defaults to 10 if omitted max 50")]
+        [CommandHandler("cirand", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Creates random objects in your inventory.", "type (string or number) <num to create> defaults to 10 if omitted max 50")]
         public static void HandleCIRandom(Session session, params string[] parameters)
         {
             string weenieTypeName = parameters[0];
@@ -1091,7 +1091,7 @@ namespace ACE.Server.Command.Handlers
         // ==================================
 
         // addallspells
-        [CommandHandler("addallspells", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 0, "Adds all known spells to your own spellbook.")]
+        [CommandHandler("addallspells", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 0, "Adds all known spells to your own spellbook.")]
         public static void HandleAddAllSpells(Session session, params string[] parameters)
         {
             for (uint spellLevel = 1; spellLevel <= 8; spellLevel++)
@@ -2023,7 +2023,7 @@ namespace ACE.Server.Command.Handlers
         /// <summary>
         /// Teleports directly to a dungeon by name or landblock
         /// </summary>
-        [CommandHandler("teledungeon", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Teleport to a dungeon", "<dungeon name or landblock>")]
+        [CommandHandler("teledungeon", AccessLevel.Advocate, CommandHandlerFlag.RequiresWorld, 1, "Teleport to a dungeon", "<dungeon name or landblock>")]
         public static void HandleTeleDungeon(Session session, params string[] parameters)
         {
             var isBlock = true;
@@ -2173,7 +2173,7 @@ namespace ACE.Server.Command.Handlers
             CommandHandlerHelper.WriteOutputInfo(session, ".NET Garbage Collection forced");
         }
 
-        [CommandHandler("auditobjectmaint", AccessLevel.Developer, CommandHandlerFlag.None, 0, "Iterates over physics objects to find leaks")]
+        [CommandHandler("auditobjectmaint", AccessLevel.Admin, CommandHandlerFlag.None, 0, "Iterates over physics objects to find leaks")]
         public static void HandleAuditObjectMaint(Session session, params string[] parameters)
         {
             var serverObjects = ServerObjectManager.ServerObjects.Keys.ToHashSet();
@@ -2226,7 +2226,7 @@ namespace ACE.Server.Command.Handlers
             log.Info($"Physics ObjMaint Audit Completed. Errors - objectTable: {objectTableErrors}, visibleObjectTable: {visibleObjectTableErrors}, voyeurTable: {voyeurTableErrors}");
         }
 
-        [CommandHandler("lootgen", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Generate a piece of loot from the LootGenerationFactory.", "<wcid or classname> <tier>")]
+        [CommandHandler("lootgen", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Generate a piece of loot from the LootGenerationFactory.", "<wcid or classname> <tier>")]
         public static void HandleLootGen(Session session, params string[] parameters)
         {
             WorldObject wo = null;
@@ -2270,7 +2270,7 @@ namespace ACE.Server.Command.Handlers
             session.Player.TryCreateInInventoryWithNetworking(wo);
         }
 
-        [CommandHandler("ciloot", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Generates randomized loot in player's inventory", "<tier> optional: <# items>")]
+        [CommandHandler("ciloot", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Generates randomized loot in player's inventory", "<tier> optional: <# items>")]
         public static void HandleCILoot(Session session, params string[] parameters)
         {
             var tier = 1;
@@ -2375,7 +2375,7 @@ namespace ACE.Server.Command.Handlers
             }
         }
 
-        [CommandHandler("requirecomps", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1,
+        [CommandHandler("requirecomps", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1,
             "Sets whether spell components are required to cast spells.",
             "[ on | off ]\n"
             + "This command sets whether spell components are required to cast spells..\n When turned on, spell components are required.\n When turned off, spell components are ignored.")]
@@ -2420,7 +2420,7 @@ namespace ACE.Server.Command.Handlers
         /// <summary>
         /// This is to add spells to items (whether loot or quest generated).  For making weapons to check damage from pcaps or other sources
         /// </summary>
-        [CommandHandler("additemspell", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Adds a spell to the last appraised item's spellbook.", "<spell id>")]
+        [CommandHandler("additemspell", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Adds a spell to the last appraised item's spellbook.", "<spell id>")]
         public static void HandleAddItemSpell(Session session, params string[] parameters)
         {
             var obj = CommandHandlerHelper.GetLastAppraisedObject(session);
@@ -2449,7 +2449,7 @@ namespace ACE.Server.Command.Handlers
             session.Network.EnqueueSend(new GameMessageSystemChat($"{spell.Name} ({spell.Id}) {msg} {obj.Name}", ChatMessageType.Broadcast));
         }
 
-        [CommandHandler("removeitemspell", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Removes a spell to the last appraised item's spellbook.", "<spell id>")]
+        [CommandHandler("removeitemspell", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Removes a spell to the last appraised item's spellbook.", "<spell id>")]
         public static void HandleRemoveItemSpell(Session session, params string[] parameters)
         {
             var obj = CommandHandlerHelper.GetLastAppraisedObject(session);
@@ -2699,7 +2699,7 @@ namespace ACE.Server.Command.Handlers
             session.Player.GiveDeed(slumlord);
         }
 
-        [CommandHandler("barrier-test", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, "Shows debug information for house barriers")]
+        [CommandHandler("barrier-test", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, "Shows debug information for house barriers")]
         public static void HandleBarrierTest(Session session, params string[] parameters)
         {
             var cell = session.Player.Location.Cell;
@@ -2767,7 +2767,7 @@ namespace ACE.Server.Command.Handlers
             session.Network.EnqueueSend(new GameMessageSystemChat(session.Player.DamageHistory.ToString(), ChatMessageType.Broadcast));
         }
 
-        [CommandHandler("remove-vitae", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, "Removes vitae from last appraised player")]
+        [CommandHandler("remove-vitae", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, "Removes vitae from last appraised player")]
         public static void HandleRemoveVitae(Session session, params string[] parameters)
         {
             var player = CommandHandlerHelper.GetLastAppraisedObject(session) as Player;
@@ -2895,7 +2895,7 @@ namespace ACE.Server.Command.Handlers
             wo.EnqueueBroadcast(new GameMessageScript(wo.Guid, (PlayScript)pscript));
         }
 
-        [CommandHandler("getinfo", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, "Shows basic info for the last appraised object.")]
+        [CommandHandler("getinfo", AccessLevel.Advocate, CommandHandlerFlag.RequiresWorld, "Shows basic info for the last appraised object.")]
         public static void HandleGetInfo(Session session, params string[] parameters)
         {
             var wo = CommandHandlerHelper.GetLastAppraisedObject(session);
@@ -2953,7 +2953,7 @@ namespace ACE.Server.Command.Handlers
             LastTestAim = wo;
         }
 
-        [CommandHandler("reload-landblock", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, "Reloads the current landblock.")]
+        [CommandHandler("reload-landblock", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, "Reloads the current landblock.")]
         public static void HandleReloadLandblocks(Session session, params string[] parameters)
         {
             var landblock = session.Player.CurrentLandblock;
@@ -2991,7 +2991,7 @@ namespace ACE.Server.Command.Handlers
             session.Network.EnqueueSend(new GameMessageSystemChat($"CachedVelocity: {obj.PhysicsObj.CachedVelocity}", ChatMessageType.Broadcast));
         }
 
-        [CommandHandler("bumpvelocity", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, "Bumps the velocity of the last appraised object.")]
+        [CommandHandler("bumpvelocity", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, "Bumps the velocity of the last appraised object.")]
         public static void HandleBumpVelocity(Session session, params string[] parameters)
         {
             var obj = CommandHandlerHelper.GetLastAppraisedObject(session);

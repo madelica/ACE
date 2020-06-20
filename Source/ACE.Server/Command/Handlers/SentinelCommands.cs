@@ -23,7 +23,7 @@ namespace ACE.Server.Command.Handlers
         private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // cloak < on / off / player / creature >
-        [CommandHandler("cloak", AccessLevel.Sentinel, CommandHandlerFlag.RequiresWorld, 1,
+        [CommandHandler("cloak", AccessLevel.Advocate, CommandHandlerFlag.RequiresWorld, 1,
             "Sets your cloaking state.",
             "< on / off / player / creature >\n" +
             "This command sets your current cloaking state\n" +
@@ -153,7 +153,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // fellowbuff [name]
-        [CommandHandler("fellowbuff", AccessLevel.Sentinel, CommandHandlerFlag.RequiresWorld, 0,
+        [CommandHandler("fellowbuff", AccessLevel.Advocate, CommandHandlerFlag.RequiresWorld, 0,
             "Buffs your fellowship (or a player's fellowship) with all beneficial spells.",
             "[name]\n"
             + "This command buffs your fellowship (or the fellowship of the specified character).")]
@@ -181,7 +181,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // buff [name]
-        [CommandHandler("buff", AccessLevel.Sentinel, CommandHandlerFlag.RequiresWorld, 0,
+        [CommandHandler("buff", AccessLevel.Advocate, CommandHandlerFlag.RequiresWorld, 0,
             "Buffs you (or a player) with all beneficial spells.",
             "[name] [maxLevel]\n"
             + "This command buffs yourself (or the specified character).")]
@@ -477,7 +477,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // deaf < on / off >
-        [CommandHandler("deaf", AccessLevel.Sentinel, CommandHandlerFlag.RequiresWorld, 1)]
+        [CommandHandler("deaf", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1)]
         public static void HandleDeaf(Session session, params string[] parameters)
         {
             // @deaf - Block @tells except for the player you are currently helping.
@@ -488,7 +488,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // deaf < hear | mute > < player >
-        [CommandHandler("deaf", AccessLevel.Sentinel, CommandHandlerFlag.RequiresWorld, 2)]
+        [CommandHandler("deaf", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 2)]
         public static void HandleDeafHearOrMute(Session session, params string[] parameters)
         {
             // @deaf hear[name] -add a player to the list of players that you can hear.

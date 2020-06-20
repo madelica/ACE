@@ -69,7 +69,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // adminui
-        [CommandHandler("adminui", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 0)]
+        [CommandHandler("adminui", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 0)]
         public static void HandleAdminui(Session session, params string[] parameters)
         {
             // usage: @adminui
@@ -79,7 +79,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // delete
-        [CommandHandler("delete", AccessLevel.Envoy, CommandHandlerFlag.RequiresWorld, 0, "Deletes the selected object.", "Players may not be deleted this way.")]
+        [CommandHandler("delete", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 0, "Deletes the selected object.", "Players may not be deleted this way.")]
         public static void HandleDeleteSelected(Session session, params string[] parameters)
         {
             // @delete - Deletes the selected object. Players may not be deleted this way.
@@ -319,7 +319,7 @@ namespace ACE.Server.Command.Handlers
         /// Teleports an admin to their sanctuary position. If a single uint value from 1 to 9 is provided as a parameter then the admin is teleported to the cooresponding named recall point.
         /// </summary>
         /// <param name="parameters">A single uint value from 0 to 9. Value 0 recalls to Sanctuary, values 1 through 9 teleports too the corresponding saved recall point.</param>
-        [CommandHandler("home", AccessLevel.Sentinel, CommandHandlerFlag.RequiresWorld, 0,
+        [CommandHandler("home", AccessLevel.Envoy, CommandHandlerFlag.RequiresWorld, 0,
             "Teleports you to your sanctuary position.",
             "< recall number > - Recalls to a saved position, valid values are 1 - 9.\n" +
             "NOTE: Calling @home without a number recalls your sanctuary position; calling it with a number will teleport you to the corresponding saved position.")]
@@ -582,7 +582,7 @@ namespace ACE.Server.Command.Handlers
         /// Command for saving the Admin's current location as the sanctuary position. If a uint between 1-9 is provided as a parameter, the corresponding named recall is saved.
         /// </summary>
         /// <param name="parameters">A single uint value from 0 to 9. Value 0 saves the Sanctuary recall (default), values 1 through 9 save the corresponding named recall point.</param>
-        [CommandHandler("save", AccessLevel.Sentinel, CommandHandlerFlag.RequiresWorld, 0,
+        [CommandHandler("save", AccessLevel.Envoy, CommandHandlerFlag.RequiresWorld, 0,
             "Sets your sanctuary position or a named recall point.",
             "< recall number > - Saves your position into the numbered recall, valid values are 1 - 9.\n" +
             "NOTE: Calling @save without a number saves your sanctuary (Lifestone Recall) position.")]
@@ -689,7 +689,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // snoop [start / stop] [Character Name]
-        [CommandHandler("snoop", AccessLevel.Envoy, CommandHandlerFlag.RequiresWorld, 2)]
+        [CommandHandler("snoop", AccessLevel.Sentinel, CommandHandlerFlag.RequiresWorld, 2)]
         public static void HandleSnoop(Session session, params string[] parameters)
         {
             // @snoop[start / stop][Character Name]
@@ -699,7 +699,7 @@ namespace ACE.Server.Command.Handlers
             // TODO: output
         }
 
-        [CommandHandler("smite", AccessLevel.Envoy, CommandHandlerFlag.RequiresWorld, 0, "Kills the selected target or all monsters in radar range if \"all\" is specified.", "[all, Player's Name]")]
+        [CommandHandler("smite", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 0, "Kills the selected target or all monsters in radar range if \"all\" is specified.", "[all, Player's Name]")]
         public static void HandleSmite(Session session, params string[] parameters)
         {
             // @smite [all] - Kills the selected target or all monsters in radar range if "all" is specified.
@@ -784,7 +784,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // teleto [char]
-        [CommandHandler("teleto", AccessLevel.Sentinel, CommandHandlerFlag.RequiresWorld, 1,
+        [CommandHandler("teleto", AccessLevel.Advocate, CommandHandlerFlag.RequiresWorld, 1,
             "Teleport yourself to a player",
             "[Player's Name]\n")]
         public static void HandleTeleto(Session session, params string[] parameters)
@@ -803,7 +803,7 @@ namespace ACE.Server.Command.Handlers
         /// <summary>
         /// Teleports a player to your current location
         /// </summary>
-        [CommandHandler("teletome", AccessLevel.Sentinel, CommandHandlerFlag.RequiresWorld, 1, "Teleports a player to your current location.", "PlayerName")]
+        [CommandHandler("teletome", AccessLevel.Advocate, CommandHandlerFlag.RequiresWorld, 1, "Teleports a player to your current location.", "PlayerName")]
         public static void HandleTeleToMe(Session session, params string[] parameters)
         {
             var playerName = string.Join(" ", parameters);
@@ -824,7 +824,7 @@ namespace ACE.Server.Command.Handlers
         /// <summary>
         /// Teleports a player to their previous position
         /// </summary>
-        [CommandHandler("telereturn", AccessLevel.Sentinel, CommandHandlerFlag.RequiresWorld, 1, "Return a player to their previous location.", "PlayerName")]
+        [CommandHandler("telereturn", AccessLevel.Advocate, CommandHandlerFlag.RequiresWorld, 1, "Return a player to their previous location.", "PlayerName")]
         public static void HandleTeleReturn(Session session, params string[] parameters)
         {
             var playerName = string.Join(" ", parameters);
@@ -849,7 +849,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // teleallto [char]
-        [CommandHandler("teleallto", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 0, "Teleports all players to a player. If no target is specified, all players will be teleported to you.", "[Player's Name]\n")]
+        [CommandHandler("teleallto", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 0, "Teleports all players to a player. If no target is specified, all players will be teleported to you.", "[Player's Name]\n")]
         public static void HandleTeleAllTo(Session session, params string[] parameters)
         {
             Player destinationPlayer = null;
@@ -874,7 +874,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // telepoi location
-        [CommandHandler("telepoi", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1,
+        [CommandHandler("telepoi", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1,
             "Teleport yourself to a named Point of Interest",
             "[POI|list]\n" +
             "@telepoi Arwic\n" +
@@ -908,7 +908,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // teleloc cell x y z [qx qy qz qw]
-        [CommandHandler("teleloc", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 4,
+        [CommandHandler("teleloc", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 4,
             "Teleport yourself to the specified location.",
             "cell [x y z] (qw qx qy qz)\n" +
             "@teleloc follows the same number order as displayed from @loc output\n" +
@@ -1051,7 +1051,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // gamecast <message>
-        [CommandHandler("gamecast", AccessLevel.Envoy, CommandHandlerFlag.RequiresWorld, 1,
+        [CommandHandler("gamecast", AccessLevel.Sentinel, CommandHandlerFlag.RequiresWorld, 1,
             "Sends a world-wide broadcast.",
             "<message>\n" +
             "This command sends a world-wide broadcast to everyone in the game. Text is prefixed with 'Broadcast from (admin-name)> '.\n" +
@@ -1067,7 +1067,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // add <spell>
-        [CommandHandler("addspell", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Adds the specified spell to your own spellbook.", "<spellid>")]
+        [CommandHandler("addspell", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Adds the specified spell to your own spellbook.", "<spellid>")]
         public static void HandleAddSpell(Session session, params string[] parameters)
         {
             if (Enum.TryParse(parameters[0], true, out SpellId spellId))
@@ -1077,7 +1077,7 @@ namespace ACE.Server.Command.Handlers
             }
         }
 
-        [CommandHandler("removespell", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Removes the specified spell to your own spellbook.", "<spellid>")]
+        [CommandHandler("removespell", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Removes the specified spell to your own spellbook.", "<spellid>")]
         public static void HandleRemoveSpell(Session session, params string[] parameters)
         {
             if (!Enum.TryParse(parameters[0], true, out SpellId spellId))
@@ -1230,7 +1230,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // create wclassid (number)
-        [CommandHandler("create", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1,
+        [CommandHandler("create", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1,
             "Creates an object or objects in the world.",
             "wclassid (string or number), Amount to Spawn (optional [default:1]), Palette (optional), Shade (optional)\n" +
             "This will attempt to spawn the weenie you specify. If you include an amount to spawn parameter it will attempt to spawn that many of the weenie.\n" +
@@ -1337,7 +1337,7 @@ namespace ACE.Server.Command.Handlers
                 PlayerManager.BroadcastToAuditChannel(session.Player, $"{session.Player.Name} has created {weenieToSpawn.Name} (0x{weenieToSpawn.Guid:X8}) at {weenieToSpawn.Location.ToLOCString()}.");
         }
 
-        [CommandHandler("createnamed", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 3,
+        [CommandHandler("createnamed", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 3,
             "Creates a named object in the world.", "<wclassid(string or number)> <count> <name ... >")]
         public static void HandleCreateNamed(Session session, params string[] parameters)
         {
@@ -1385,7 +1385,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // ci wclassid (number)
-        [CommandHandler("ci", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Creates an object in your inventory.", "wclassid (string or number), Amount to Spawn (optional [default:1]), Palette (optional), Shade (optional)\n")]
+        [CommandHandler("ci", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Creates an object in your inventory.", "wclassid (string or number), Amount to Spawn (optional [default:1]), Palette (optional), Shade (optional)\n")]
         public static void HandleCI(Session session, params string[] parameters)
         {
             string weenieClassDescription = parameters[0];
@@ -1626,7 +1626,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // god
-        [CommandHandler("god", AccessLevel.Sentinel, CommandHandlerFlag.RequiresWorld, 0,
+        [CommandHandler("god", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 0,
             "Turns current character into a god!",
             "Sets attributes and skills to higher than max levels.\n"
             + "To return to a mortal state, use the /ungod command.\n"
@@ -1790,7 +1790,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // ungod
-        [CommandHandler("ungod", AccessLevel.Sentinel, CommandHandlerFlag.RequiresWorld, 0,
+        [CommandHandler("ungod", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 0,
             "Returns character to a mortal state.",
             "Sets attributes and skills back to the values they were when you became a god.\n"
             + "If the command fails to revert your state it will default to godmode.\n"
@@ -2075,7 +2075,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // heal
-        [CommandHandler("heal", AccessLevel.Envoy, CommandHandlerFlag.RequiresWorld, 0,
+        [CommandHandler("heal", AccessLevel.Advocate, CommandHandlerFlag.RequiresWorld, 0,
             "Heals yourself (or the selected creature)",
             "\n" + "This command fully restores your(or the selected creature's) health, mana, and stamina")]
         public static void HandleHeal(Session session, params string[] parameters)
@@ -2136,7 +2136,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // morph
-        [CommandHandler("morph", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1,
+        [CommandHandler("morph", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1,
             "Morphs your bodily form into that of the specified creature. Be careful with this one!",
             "<wcid or weenie class name> [character name]")]
         public static void HandleMorph(Session session, params string[] parameters)
@@ -2273,7 +2273,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // qst
-        [CommandHandler("qst", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1,
+        [CommandHandler("qst", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1,
             "Query, stamp, and erase quests on the targeted player",
             "[list | bestow | erase]\n"
             + "qst list - List the quest flags for the targeted player\n"
@@ -2435,7 +2435,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // rename <Current Name> <New Name>
-        [CommandHandler("rename", AccessLevel.Envoy, CommandHandlerFlag.None, 2,
+        [CommandHandler("rename", AccessLevel.Admin, CommandHandlerFlag.None, 2,
             "Rename a character. (Do NOT include +'s for admin names)",
             "< Current Name >, < New Name >")]
         public static void HandleRename(Session session, params string[] parameters)
@@ -2530,7 +2530,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // spendxp
-        [CommandHandler("spendxp", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 2)]
+        [CommandHandler("spendxp", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 2)]
         public static void HandleSpendxp(Session session, params string[] parameters)
         {
             // @spendxp - Allows you to more quickly spend your available xp into the specified skill.
@@ -2600,7 +2600,7 @@ namespace ACE.Server.Command.Handlers
         }
 
         // watchmen
-        [CommandHandler("watchmen", AccessLevel.Admin, CommandHandlerFlag.None, 0,
+        [CommandHandler("watchmen", AccessLevel.Sentinel, CommandHandlerFlag.None, 0,
             "Displays a list of accounts with the specified level of admin access.",
             "(accesslevel)")]
         public static void Handlewatchmen(Session session, params string[] parameters)
@@ -2991,14 +2991,14 @@ namespace ACE.Server.Command.Handlers
         }
 
         // cm <material type> <quantity> <ave. workmanship>
-        [CommandHandler("cm", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Create a salvage bag in your inventory", "<material_type>, optional: <structure> <workmanship> <num_items>")]
+        [CommandHandler("cm", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Create a salvage bag in your inventory", "<material_type>, optional: <structure> <workmanship> <num_items>")]
         public static void HandleCM(Session session, params string[] parameters)
         {
             // Format is: @cm <material type> <quantity> <ave. workmanship>
             HandleCISalvage(session);
         }
 
-        [CommandHandler("cisalvage", AccessLevel.Developer, CommandHandlerFlag.RequiresWorld, 1, "Create a salvage bag in your inventory", "<material_type>, optional: <structure> <workmanship> <num_items>")]
+        [CommandHandler("cisalvage", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Create a salvage bag in your inventory", "<material_type>, optional: <structure> <workmanship> <num_items>")]
         public static void HandleCISalvage(Session session, params string[] parameters)
         {
             if (!Enum.TryParse(parameters[0], true, out MaterialType materialType))

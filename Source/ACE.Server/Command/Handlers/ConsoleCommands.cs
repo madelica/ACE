@@ -10,7 +10,7 @@ namespace ACE.Server.Command.Handlers
 {
     public static class ConsoleCommands
     {
-        [CommandHandler("version", AccessLevel.Admin, CommandHandlerFlag.ConsoleInvoke, 0, "Show server version information.", "")]
+        [CommandHandler("version", AccessLevel.Developer, CommandHandlerFlag.ConsoleInvoke, 0, "Show server version information.", "")]
         public static void ShowVersion(Session session, params string[] parameters)
         {
             var msg = ServerBuildInfo.GetVersionInfo();

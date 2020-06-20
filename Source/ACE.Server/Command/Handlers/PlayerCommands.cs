@@ -165,7 +165,7 @@ namespace ACE.Server.Command.Handlers
             }
         }
 
-        [CommandHandler("castmeter", AccessLevel.Player, CommandHandlerFlag.RequiresWorld, "Shows the fast casting efficiency meter")]
+        [CommandHandler("castmeter", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, "Shows the fast casting efficiency meter")]
         public static void HandleCastMeter(Session session, params string[] parameters)
         {
             if (parameters.Length == 0)
