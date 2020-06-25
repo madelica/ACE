@@ -2023,7 +2023,7 @@ namespace ACE.Server.Command.Handlers
         /// <summary>
         /// Teleports directly to a dungeon by name or landblock
         /// </summary>
-        [CommandHandler("teledungeon", AccessLevel.Advocate, CommandHandlerFlag.RequiresWorld, 1, "Teleport to a dungeon", "<dungeon name or landblock>")]
+        [CommandHandler("teledungeon", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Teleport to a dungeon", "<dungeon name or landblock>")]
         public static void HandleTeleDungeon(Session session, params string[] parameters)
         {
             var isBlock = true;
