@@ -179,6 +179,13 @@ namespace ACE.Server.WorldObjects.Managers
             else
             {
                 var duration = spell.Duration;
+
+                if (caster.WeenieClassId == 4)
+                    duration *= 16.0f;
+
+                if (caster.WeenieClassId == 5000798)
+                    duration *= 3.0f;
+
                 if (caster is Player player && player.AugmentationIncreasedSpellDuration > 0 && spell.DotDuration == 0)
                     duration *= 1.0f + player.AugmentationIncreasedSpellDuration * 0.2f;
 
