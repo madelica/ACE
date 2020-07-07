@@ -2895,7 +2895,7 @@ namespace ACE.Server.Command.Handlers
             wo.EnqueueBroadcast(new GameMessageScript(wo.Guid, (PlayScript)pscript));
         }
 
-        [CommandHandler("getinfo", AccessLevel.Advocate, CommandHandlerFlag.RequiresWorld, "Shows basic info for the last appraised object.")]
+        [CommandHandler("getinfo", AccessLevel.Player, CommandHandlerFlag.RequiresWorld, "Shows basic info for the last appraised object.")]
         public static void HandleGetInfo(Session session, params string[] parameters)
         {
             var wo = CommandHandlerHelper.GetLastAppraisedObject(session);
