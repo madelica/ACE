@@ -66,7 +66,7 @@ namespace ACE.Server.Command.Handlers
                     CommandHandlerHelper.WriteOutputInfo(session, $"You are now cloaked.\nYou are now ethereal and can pass through doors.", ChatMessageType.Broadcast);
                     break;
                 case "player":
-                    if (session.AccessLevel > AccessLevel.Envoy)
+                    if (session.AccessLevel > AccessLevel.Advocate)
                     {
                         if (session.Player.CloakStatus == CloakStatus.Player)
                             return;
